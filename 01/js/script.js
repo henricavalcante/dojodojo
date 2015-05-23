@@ -9,7 +9,7 @@ var User = React.createClass({
 
 var BtnEnviar = React.createClass({
 	render: function(){
-		return <button id="btn_enviar"/>
+		return <button id="btn_enviar">Enviar</button>
 	}
 });
 
@@ -29,8 +29,7 @@ var ChatHistory = React.createClass({
 	render: function() {
 		return (
 			<section id="wc_box_messages">
-				<InputText/>
-				<BtnEnviar/>
+				
 			</section>
 			);
 	}
@@ -48,6 +47,8 @@ var ReactChat = React.createClass({
 			<section id="{this.props.id}">
 				<ListUsers/>
 				<ChatHistory/>
+				<InputText/>
+				<BtnEnviar/>
 			</section>
 		);
 	}
