@@ -3,9 +3,7 @@ var User = React.createClass({
 
 	},
 	render: function() {
-		return (
-			
-		);
+		return
 	}
 });
 
@@ -27,7 +25,7 @@ var InputText = React.createClass({
 	}
 });
 
-var BoxMessages = React.createClass({
+var ChatHistory = React.createClass({
 	render: function() {
 		return (
 			<section id="wc_box_messages">
@@ -49,11 +47,11 @@ var ReactChat = React.createClass({
 		return (
 			<section id="{this.props.id}">
 				<ListUsers/>
-				<BoxMessages/>
+				<ChatHistory/>
 			</section>
 		);
 	}
 });
 
 var mountNode = document.getElementById('mountNode');
-React.render(<ReactChat id="WiChatMuhahaha" />, mountNode);
+React.render(<ReactChat id="WiChat" />, mountNode);

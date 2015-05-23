@@ -1,0 +1,6 @@
+#wc_list_users {
+	position: absolute;
+	height: 100%;
+	width: 50px;
+	background: rgba(0,0,0,0.5);	
+}
