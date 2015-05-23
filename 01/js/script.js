@@ -22,8 +22,8 @@ var BtnAndInput = React.createClass({
 	render: function(){
 		return (
 			<div>
-				<BtnSend/>
 				<InputText/>
+				<BtnSend/>
 			</div>
 		);
 	}
@@ -78,9 +78,22 @@ var ChatHistory = React.createClass({
 			msg: []
 		};
 	},
+	getDate: function() {
+		var 
+			date = new Date(),
+			hour = (date.getHours()<10) ? "0"+date.getHours() : date.getHours(),
+			min = (date.getMinutes()<10) ? "0"+date.getMinutes() : date.getMinutes(),
+			sec = (date.getSeconds()<10) ? "0"+date.getSeconds() : date.getSeconds(),
+			hourPost = hour + ":" + min + ":" +sec;
+
+		return hourPost;
+	},
 	addMessage: function(msg) {
 		var msgs = this.state.msg;
-		msgs.push(msg);
+		msgs.push({
+			date: this.getDate(),
+			post: msg
+		});
 		this.setState({msg: msgs});
 	},
 	componentDidMount: function() {
@@ -95,7 +108,8 @@ var ChatHistory = React.createClass({
 				<ul>
 					{this.state.msg.map(function(item, i) {
 	          return (
-	          	<li key={i}>{item}</li>
+
+	          	<li key={i}>{item.date} {item.post}</li>
 	          );
 	        }, this)}
 				</ul>
