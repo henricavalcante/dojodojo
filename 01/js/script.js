@@ -32,6 +32,9 @@ var InputText = React.createClass({
 });
 
 var ChatHistory = React.createClass({
+	getInitialState: function() {
+		this.props.msg = [];
+	},
 	componentDidMount: function() {
 		window.addEventListener('newmsg', function(msg) {
 			this.props.msg.push(msg);
@@ -41,12 +44,10 @@ var ChatHistory = React.createClass({
 		return (
 			<section id="wc_box_messages">
 				<ul>
-				for (var i in this.props.msg) {
-					if (this.props.msg.hasOwnProperty(i)) {
+				for (var i = 0; i < this.props.msg.length; i++) {
 						<li>
 							{this.props.msg[i]}
 						</li>
-					};
 				}
 				</ul>
 			</section>
