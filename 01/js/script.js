@@ -72,26 +72,32 @@ var InputText = React.createClass({
 	}
 });
 
+var ChatTime = React.createClass({
+	teste: function(dateMsg) {
+		var
+			temp = ~~((_.now() - dateMsg)/1000),
+			ss = _.padLeft(temp % 60,2,'0'),
+			mm = _.padLeft(~~(temp / 60),2,'0'),
+			hh = _.padLeft(~~(temp / 3600),2,'0'),
+			hour = hh+':'+mm+':'+ss 
+
+		return hour;
+	},
+	render: function(){
+		return <span>{this.teste(this.props.time)}</span>
+	}
+});
+
 var ChatHistory = React.createClass({
 	getInitialState: function () {
 		return {
 			msg: []
 		};
 	},
-	getDate: function() {
-		var 
-			date = new Date(),
-			hour = (date.getHours()<10) ? "0"+date.getHours() : date.getHours(),
-			min = (date.getMinutes()<10) ? "0"+date.getMinutes() : date.getMinutes(),
-			sec = (date.getSeconds()<10) ? "0"+date.getSeconds() : date.getSeconds(),
-			hourPost = hour + ":" + min + ":" +sec;
-
-		return hourPost;
-	},
 	addMessage: function(msg) {
 		var msgs = this.state.msg;
 		msgs.push({
-			date: this.getDate(),
+			date: _.now(),
 			post: msg
 		});
 		this.setState({msg: msgs});
@@ -104,12 +110,11 @@ var ChatHistory = React.createClass({
 	},
 	render: function() {
 		return (
-			<section id="wc_box_messages">
+			<section id='wc_box_messages'>
 				<ul>
 					{this.state.msg.map(function(item, i) {
 	          return (
-
-	          	<li key={i}>{item.date} {item.post}</li>
+	          	<li key={i}><ChatTime time={item.date}/> {item.post}</li>
 	          );
 	        }, this)}
 				</ul>
@@ -121,7 +126,7 @@ var ChatHistory = React.createClass({
 var ListUsers = React.createClass({
 	render: function() {
 		return (
-			<section id="wc_list_users">
+			<section id='wc_list_users'>
 				<Contacts status={'on'} name={'chumbrega'}/>
 				<Contacts status={'on'} name={'alfranio'}/>
 			</section>
@@ -141,4 +146,4 @@ var ReactChat = React.createClass({
 });
 
 var mountNode = document.getElementById('mountNode');
-React.render(<ReactChat id="WiChat" />, mountNode);
+React.render(<ReactChat id='WiChat' />, mountNode);
