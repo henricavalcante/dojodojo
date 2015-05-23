@@ -12,6 +12,23 @@ var Contacts = React.createClass({
 	}
 });
 
+var BoxMessenger = React.createClass({
+	render: function() {
+		return <span></span>
+	} 
+});
+
+var BtnAndInput = React.createClass({
+	render: function(){
+		return (
+			<div>
+				<BtnEnviar />
+				<InputText />
+			</div>
+		);
+	}
+});
+
 var BtnEnviar = React.createClass({
 	onMouseDown: function(){
 		alert("alo vo to esotrado");
@@ -21,17 +38,12 @@ var BtnEnviar = React.createClass({
 	}
 });
 
-var BoxMessenger = React.createClass({
-	render: function() {
-		return <span></span>
-	} 
-});
-
 var InputText = React.createClass({
 	onKeyDown: function (e) {
 		if (e.keyCode == 13) {
 			var event = new CustomEvent('newmsg', { 'detail': e.target.value });
 			window.dispatchEvent(event);
+			e.target.value = "";
 		}
 		return null;
 	},
@@ -46,14 +58,16 @@ var ChatHistory = React.createClass({
 			msg: ['teste', 'teste', 'danilo homem todo, tá atento?, da uma risadinha =)']
 		};
 	},
-	pitomba: function() {
-		this.setState({msg: ['eita bexisga']});
+	pitomba: function(msg) {
+		var msgs = this.state.msg;
+		msgs.push(msg);
+		this.setState({msg: msgs});
 	},
 	componentDidMount: function() {
 		var pitomba2 = this.pitomba;
 		window.addEventListener('newmsg', function(e) {
 			//console.log(e);
-			pitomba2();
+			pitomba2(e.detail);
 		});
 	},
 	render: function() {
@@ -91,8 +105,7 @@ var ReactChat = React.createClass({
 			<section id={this.props.id}>
 				<ListUsers/>
 				<ChatHistory/>
-				<InputText/>
-				<BtnEnviar/>
+				<BtnAndInput/>
 			</section>
 		);
 	}
