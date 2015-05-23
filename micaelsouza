@@ -1,0 +1,6 @@
+#!/bin/sh
+echo "micaelsouza"
+git config --global user.name "Micael Souza" --replace-all
+git config --global user.email micael.souza@outlook.com --replace-all
+git add --all
+git commit -m 'next step'
