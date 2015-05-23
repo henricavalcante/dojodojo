@@ -1,0 +1,6 @@
+#!/bin/sh
+echo "henricavalcante"
+git config --global user.name "Henri Cavalcante"
+git config --global user.email hnri_mxel@hotmail.com
+git add --all
+git commit -m 'next step'
