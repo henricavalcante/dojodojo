@@ -1,7 +1,7 @@
 var BoxMessages = React.createClass({
 	render: function() {
-		<section id="wc_box_messages"></section>;
-	};
+		return <section id="wc_box_messages"></section>;
+	}
 });
 
 var ListUsers = React.createClass({
