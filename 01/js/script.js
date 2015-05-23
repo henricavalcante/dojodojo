@@ -22,16 +22,15 @@ var BtnAndInput = React.createClass({
 	render: function(){
 		return (
 			<div>
-				<BtnEnviar />
-				<InputText />
+				<BtnSend/>
+				<InputText/>
 			</div>
 		);
 	}
 });
 
-var BtnEnviar = React.createClass({
+var BtnSend = React.createClass({
 	onMouseDown: function(){
-		alert("alo vo to esotrado");
 	},
 	render: function(){
 		return <button id="btn_enviar" onClick={this.onMouseDown}>Enviar</button>
@@ -55,19 +54,19 @@ var InputText = React.createClass({
 var ChatHistory = React.createClass({
 	getInitialState: function () {
 		return {
-			msg: ['teste', 'teste', 'danilo homem todo, tá atento?, da uma risadinha =)']
+			msg: ["chat"]
 		};
 	},
-	pitomba: function(msg) {
+	addMessage: function(msg) {
 		var msgs = this.state.msg;
 		msgs.push(msg);
 		this.setState({msg: msgs});
 	},
 	componentDidMount: function() {
-		var pitomba2 = this.pitomba;
+		var historyMenssages = this.addMessage;
 		window.addEventListener('newmsg', function(e) {
 			//console.log(e);
-			pitomba2(e.detail);
+			historyMenssages(e.detail);
 		});
 	},
 	render: function() {
