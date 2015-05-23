@@ -1,3 +1,14 @@
+var User = React.createClass({
+	getInitialState: function() {
+
+	},
+	render: function() {
+		return (
+			
+		);
+	}
+});
+
 var BtnEnviar = React.createClass({
 	render: function(){
 		return <button id="btn_enviar"/>
