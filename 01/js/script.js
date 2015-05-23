@@ -41,24 +41,24 @@ var InputText = React.createClass({
 });
 
 var ChatHistory = React.createClass({
-	getDefaultProps: function() {
+	getInitialState: function () {
 		return {
-			msg: ['teste', 'teste', 'danilo viado']
+			msg: ['teste', 'teste', 'danilo homem todo, tá atento?, da uma risadinha =)']
 		};
 	},
+	getState: (),
 	componentDidMount: function() {
 		window.addEventListener('newmsg', function(e) {
-			console.log(e);
-			this.props.msg.push(e.detail);
-
+			//console.log(e);
+			this.setState({msg: [e.detail]});
 		});
 	},
 	render: function() {
-		var msg = this.props.msg;
+		var msg = this.state.msg;
 		var chico = [];
 		for (var i in msg) {
 			if (msg.hasOwnProperty(i)){
-				chico.push(<li>{this.props.msg[i]}</li>);
+				chico.push(<li>{this.state.msg[i]}</li>);
 			}
 		}
 		return (
