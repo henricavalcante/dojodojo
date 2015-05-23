@@ -13,8 +13,11 @@ var Contacts = React.createClass({
 });
 
 var BtnEnviar = React.createClass({
+	onMouseDown: function(){
+		alert("alo vo to esotrado");
+	},
 	render: function(){
-		return <button id="btn_enviar">Enviar</button>
+		return <button id="btn_enviar" onClick={this.onMouseDowns}>Enviar</button>
 	}
 });
 

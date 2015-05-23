@@ -2,6 +2,10 @@
 	height: 100%;
 }
 
+#ip_text{
+	display: block;
+}
+
 #wc_list_users {
 	position: relative;
 	height: 100%;
