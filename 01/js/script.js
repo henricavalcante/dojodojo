@@ -32,8 +32,10 @@ var InputText = React.createClass({
 });
 
 var ChatHistory = React.createClass({
-	getInitialState: function() {
-		this.props.msg = [];
+	getDefaultProps: function() {
+		return {
+			msg: ['teste', 'teste', 'danilo viado']
+		};
 	},
 	componentDidMount: function() {
 		window.addEventListener('newmsg', function(msg) {
@@ -41,14 +43,17 @@ var ChatHistory = React.createClass({
 		});
 	},
 	render: function() {
+		var msg = this.props.msg;
+		var chico = [];
+		for (var i in msg) {
+			if (msg.hasOwnProperty(i)){
+				chico.push(<li>{this.props.msg[i]}</li>);
+			}
+		}
 		return (
 			<section id="wc_box_messages">
 				<ul>
-				for (var i = 0; i < this.props.msg.length; i++) {
-						<li>
-							{this.props.msg[i]}
-						</li>
-				}
+					{chico}
 				</ul>
 			</section>
 			);
