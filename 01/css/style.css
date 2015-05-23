@@ -1,6 +1,16 @@
+#wiChat {
+	height: 100%;
+}
+
 #wc_list_users {
-	position: absolute;
+	position: relative;
 	height: 100%;
 	width: 50px;
-	background: rgba(0,0,0,0.5);	
+	background: rgba(0,0,0,0.5);
+	display: inline-block;	
+}
+
+#wc_box_messages {
+	position: relative;
+	display: inline-block;
 }

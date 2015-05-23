@@ -1,9 +1,14 @@
-var User = React.createClass({
+var Contacts = React.createClass({
 	getInitialState: function() {
-
+		return {status: 0, name: 'user'};
 	},
 	render: function() {
-		return
+		return (
+			<li>
+				<span></span>
+				<span></span>
+			</li>
+		);
 	}
 });
 
@@ -69,7 +74,7 @@ var ListUsers = React.createClass({
 var ReactChat = React.createClass({
 	render: function() {
 		return (
-			<section id="{this.props.id}">
+			<section id={this.props.id}>
 				<ListUsers/>
 				<ChatHistory/>
 				<InputText/>
