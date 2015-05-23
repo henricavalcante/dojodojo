@@ -31,7 +31,7 @@ var InputText = React.createClass({
 	onKeyDown: function (e) {
 		if (e.keyCode == 13) {
 			var event = new CustomEvent('newmsg', { 'detail': e.target.value });
-			document.dispatchEvent(event);
+			window.dispatchEvent(event);
 		}
 		return null;
 	},
@@ -49,7 +49,8 @@ var ChatHistory = React.createClass({
 	componentDidMount: function() {
 		window.addEventListener('newmsg', function(e) {
 			console.log(e);
-			//this.props.msg.push(e.target);
+			this.props.msg.push(e.detail);
+
 		});
 	},
 	render: function() {
