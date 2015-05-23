@@ -31,6 +31,8 @@ var BtnAndInput = React.createClass({
 
 var BtnSend = React.createClass({
 	onMouseDown: function(){
+		var event = new CustomEvent('clickBtnSend');
+			window.dispatchEvent(event);
 	},
 	render: function(){
 		return <button id="btn_enviar" onClick={this.onMouseDown}>Enviar</button>
@@ -38,23 +40,35 @@ var BtnSend = React.createClass({
 });
 
 var InputText = React.createClass({
-	onKeyDown: function (e) {
-		if (e.keyCode == 13) {
-			var event = new CustomEvent('newmsg', { 'detail': e.target.value });
+	getInitialState: function () {
+		return {};
+	},
+	dispatchMessage: function () {
+		var event = new CustomEvent('newmsg', { 'detail': this.state.value });
 			window.dispatchEvent(event);
+	},
+	onKeyUp: function (e) {
+		this.setState({value: e.target.value});
+		if (e.keyCode == 13) {
+			this.dispatchMessage();
 			e.target.value = "";
 		}
-		return null;
+	},
+	componentDidMount: function() {
+		var _this = this;
+		window.addEventListener('clickBtnSend', function(e) {
+			_this.dispatchMessage();
+		});
 	},
 	render: function() {
-		return <input onKeyDown={this.onKeyDown} id="ip_text"/>
+		return <input onKeyUp={this.onKeyUp} id="ip_text"/>
 	}
 });
 
 var ChatHistory = React.createClass({
 	getInitialState: function () {
 		return {
-			msg: ["chat"]
+			msg: []
 		};
 	},
 	addMessage: function(msg) {
@@ -63,24 +77,20 @@ var ChatHistory = React.createClass({
 		this.setState({msg: msgs});
 	},
 	componentDidMount: function() {
-		var historyMenssages = this.addMessage;
+		var _this = this;
 		window.addEventListener('newmsg', function(e) {
-			//console.log(e);
-			historyMenssages(e.detail);
+			_this.addMessage(e.detail);
 		});
 	},
 	render: function() {
-		var msg = this.state.msg;
-		var chico = [];
-		for (var i in msg) {
-			if (msg.hasOwnProperty(i)){
-				chico.push(<li>{this.state.msg[i]}</li>);
-			}
-		}
 		return (
 			<section id="wc_box_messages">
 				<ul>
-					{chico}
+					{this.state.msg.map(function(item, i) {
+	          return (
+	          	<li key={i}>{item}</li>
+	          );
+	        }, this)}
 				</ul>
 			</section>
 			);
@@ -102,9 +112,8 @@ var ReactChat = React.createClass({
 	render: function() {
 		return (
 			<section id={this.props.id}>
-				<ListUsers/>
-				<ChatHistory/>
 				<BtnAndInput/>
+				<ChatHistory/>
 			</section>
 		);
 	}
