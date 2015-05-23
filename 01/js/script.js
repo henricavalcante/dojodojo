@@ -1,12 +1,18 @@
-var Btn_enviar = React.createClass({
+var BtnEnviar = React.createClass({
 	render: function(){
 		return <button id="btn_enviar"/>
 	}
 });
 
 var InputText = React.createClass({
+	onKeyDown: function (e) {
+		if (e.keyCode == 13) {
+			//enviar a mensagem.
+		}
+		return null;
+	},
 	render: function() {
-		return <input id="ip_text"/>
+		return <input onKeyDown={this.onKeyDown} id="ip_text"/>
 	}
 });
 
@@ -15,7 +21,7 @@ var BoxMessages = React.createClass({
 		return (
 			<section id="wc_box_messages">
 				<InputText/>
-				<Btn_enviar/>
+				<BtnEnviar/>
 			</section>
 			);
 	}
