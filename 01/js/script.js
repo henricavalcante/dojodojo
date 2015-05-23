@@ -26,10 +26,22 @@ var InputText = React.createClass({
 });
 
 var ChatHistory = React.createClass({
+	componentDidMount: function() {
+		window.addEventListner('newmsg', function(msg) {
+			this.props.msg.push(msg);
+		});
+	},
 	render: function() {
 		return (
 			<section id="wc_box_messages">
-				
+				<ul>
+				for (var i in this.props.msg) {
+					if ()
+					<li>
+						this.props.msg[i]
+					</li>
+				}
+				</ul>
 			</section>
 			);
 	}
