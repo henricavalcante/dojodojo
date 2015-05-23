@@ -44,9 +44,14 @@ var InputText = React.createClass({
 		return {};
 	},
 	dispatchMessage: function () {
-		var event = new CustomEvent('newmsg', { 'detail': this.state.text });
-		window.dispatchEvent(event);
-		this.setState({text: ''});
+		var text = this.state.text.trim();
+
+		if(text.length){
+			var event = new CustomEvent('newmsg', { 'detail': this.state.text });
+			window.dispatchEvent(event);
+			this.setState({text: ''});
+		}
+		
 	},
 	onKeyUp: function(e){
 		if (e.keyCode === 13) {
