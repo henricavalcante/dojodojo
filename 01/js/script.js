@@ -46,11 +46,14 @@ var ChatHistory = React.createClass({
 			msg: ['teste', 'teste', 'danilo homem todo, tá atento?, da uma risadinha =)']
 		};
 	},
-	getState: (),
+	pitomba: function() {
+		this.setState({msg: ['eita bexisga']});
+	},
 	componentDidMount: function() {
+		var pitomba2 = this.pitomba;
 		window.addEventListener('newmsg', function(e) {
 			//console.log(e);
-			this.setState({msg: [e.detail]});
+			pitomba2();
 		});
 	},
 	render: function() {
