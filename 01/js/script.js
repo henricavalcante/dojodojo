@@ -5,8 +5,8 @@ var Contacts = React.createClass({
 	render: function() {
 		return (
 			<li>
-				<span></span>
-				<span></span>
+				<span>{this.props.status}</span>
+				<span>{this.props.name}</span>
 			</li>
 		);
 	}
@@ -72,7 +72,12 @@ var ChatHistory = React.createClass({
 
 var ListUsers = React.createClass({
 	render: function() {
-		return <section id="wc_list_users"></section>;
+		return (
+			<section id="wc_list_users">
+				<Contacts status={'on'} name={'chumbrega'}/>
+				<Contacts status={'on'} name={'alfranio'}/>
+			</section>
+		);
 	}
 });
 
