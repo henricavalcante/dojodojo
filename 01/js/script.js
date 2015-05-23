@@ -35,7 +35,7 @@ var BtnSend = React.createClass({
 			window.dispatchEvent(event);
 	},
 	render: function(){
-		return <button id="btn_enviar" onClick={this.onMouseDown}>Enviar</button>
+		return <button onClick={this.onMouseDown}>Enviar</button>
 	}
 });
 
@@ -44,15 +44,17 @@ var InputText = React.createClass({
 		return {};
 	},
 	dispatchMessage: function () {
-		var event = new CustomEvent('newmsg', { 'detail': this.state.value });
-			window.dispatchEvent(event);
+		var event = new CustomEvent('newmsg', { 'detail': this.state.text });
+		window.dispatchEvent(event);
+		this.setState({text: ''});
 	},
-	onKeyUp: function (e) {
-		this.setState({value: e.target.value});
-		if (e.keyCode == 13) {
+	onKeyUp: function(e){
+		if (e.keyCode === 13) {
 			this.dispatchMessage();
-			e.target.value = "";
 		}
+	},
+	onChange: function (e) {
+		this.setState({text: e.target.value});
 	},
 	componentDidMount: function() {
 		var _this = this;
@@ -61,7 +63,7 @@ var InputText = React.createClass({
 		});
 	},
 	render: function() {
-		return <input onKeyUp={this.onKeyUp} id="ip_text"/>
+		return <input onChange={this.onChange} onKeyUp={this.onKeyUp} value={this.state.text} />
 	}
 });
 
