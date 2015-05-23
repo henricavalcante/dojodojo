@@ -13,6 +13,12 @@ var BtnEnviar = React.createClass({
 	}
 });
 
+var BoxMessenger = React.createClass({
+	render: function() {
+		return <span></span>
+	} 
+});
+
 var InputText = React.createClass({
 	onKeyDown: function (e) {
 		if (e.keyCode == 13) {
@@ -36,7 +42,7 @@ var ChatHistory = React.createClass({
 			<section id="wc_box_messages">
 				<ul>
 				for (var i in this.props.msg) {
-					if () {
+					if (this.props.msg.hasOwnProperty(i)) {
 						<li>
 							{this.props.msg[i]}
 						</li>
