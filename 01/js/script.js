@@ -17,7 +17,7 @@ var BtnEnviar = React.createClass({
 		alert("alo vo to esotrado");
 	},
 	render: function(){
-		return <button id="btn_enviar" onClick={this.onMouseDowns}>Enviar</button>
+		return <button id="btn_enviar" onClick={this.onMouseDown}>Enviar</button>
 	}
 });
 
@@ -30,7 +30,8 @@ var BoxMessenger = React.createClass({
 var InputText = React.createClass({
 	onKeyDown: function (e) {
 		if (e.keyCode == 13) {
-			//enviar a mensagem.
+			var event = new CustomEvent('newmsg', { 'detail': e.target.value });
+			document.dispatchEvent(event);
 		}
 		return null;
 	},
@@ -46,8 +47,9 @@ var ChatHistory = React.createClass({
 		};
 	},
 	componentDidMount: function() {
-		window.addEventListener('newmsg', function(msg) {
-			this.props.msg.push(msg);
+		window.addEventListener('newmsg', function(e) {
+			console.log(e);
+			//this.props.msg.push(e.target);
 		});
 	},
 	render: function() {
