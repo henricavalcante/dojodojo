@@ -13,7 +13,7 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-	io.emit('round', round);
+	io.emit('round', 'Connected...');
 });
 
 http.listen(3000, function(){
