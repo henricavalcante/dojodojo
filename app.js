@@ -1,25 +1,44 @@
 'use strict';
 
 var _ = require('lodash');
-var socket = require('socket.io');
 var exec = require('child_process').exec;
 var cfg = require('./config.json');
 var chalk = require('chalk');
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', function(socket){
+    io.emit('round', 'started');
+});
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
 
 function* participant(participants){
-	var round = 1;
+	var roundCount = 1;
 	var backlog = addParticipantsToBacklog(participants);
 	while(true) {
 		if (backlog.length <= participants.length) {
 			backlog = addParticipantsToBacklog(participants, backlog);
 		}
-		let pilot = backlog.shift();
-		pilot.round = round++;
-		yield {
-			pilot: pilot,
+		let round = {
+			pilot: backlog.shift(),
 			coPilor: backlog[0],
 			getReady: backlog[1]
 		};
+		round.pilot.roundCount = roundCount++;
+
+		if (io.socket && io.socket.connected) {
+	  	io.broadcast.emit('round', round);
+		}
+
+		yield round;
 	}
 }
 var participant = participant(_.where(cfg.participants, {"active": true}));
@@ -35,10 +54,12 @@ function init(participant) {
 		beforePilot = actualParticipant.pilot;
 	}, cfg.time);
 
+
 }
 
 function pushCurrentCode(pilot) {
     
+
 	exec('git config user.name "' + pilot.username + '" --replace-all');
 	exec('git config user.email ' + pilot.email + ' --replace-all');
 	exec('git add --all');
