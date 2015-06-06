@@ -28,7 +28,7 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.state.username = e.detail.pilot.username;
+            _this.setState({username: e.detail.pilot.username});
           });
         },
         render: function () {
