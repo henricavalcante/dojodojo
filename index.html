@@ -20,6 +20,11 @@
     <script type="text/jsx">
 
       var DojoPilot = React.createClass({
+        getInitialState: function () {
+          return {
+            username: ''
+          };
+        },
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
@@ -36,6 +41,11 @@
       });
 
       var DojoCoPilot = React.createClass({
+        getInitialState: function () {
+          return {
+            username: ''
+          };
+        },
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
@@ -52,6 +62,11 @@
       });
 
       var DojoGetReady = React.createClass({
+        getInitialState: function () {
+          return {
+            username: ''
+          };
+        },
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
