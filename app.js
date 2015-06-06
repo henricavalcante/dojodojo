@@ -4,13 +4,17 @@ var _ = require('lodash');
 var exec = require('child_process').exec;
 var cfg = require('./config.json');
 var chalk = require('chalk');
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
+
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
