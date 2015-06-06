@@ -33,7 +33,7 @@ function* participant(participants){
 		round.pilot.roundCount = roundCount++;
 
 		io.on('connection', function(socket){
-			socket.broadcast.emit('round', round);
+			socket.emit('round', round);
 		});
 
 		yield round;
