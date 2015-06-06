@@ -1,6 +1,0 @@
-#!/bin/sh
-echo "henricavalcante"
-git config --global user.name "Henri Cavalcante" --replace-all
-git config --global user.email hnri_mxel@hotmail.com --replace-all
-git add --all
-git commit -m 'next step'

@@ -4,12 +4,83 @@
     <title>CodeDojo</title>
   </head>
   <body>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <div id="mountNode"></div>
+    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
     <script>
       var socket = io();
       socket.on('round', function(participants){
+        var event = new CustomEvent('onRound', {'detail': participants});
+        window.dispatchEvent(event);
         console.log(participants);
       });
+    </script>
+
+    <script type="text/jsx">
+
+      var DojoPilot = React.createClass({
+        componentDidMount: function() {
+          var _this = this;
+          window.addEventListener('onRound', function(e) {
+            _this.state.username = e.pilot.username;
+          });
+        },
+        render: function () {
+          return (
+            <div>
+            Pilot: {this.state.username}
+            </div>
+          );
+        }
+      });
+
+      var DojoCoPilot = React.createClass({
+        componentDidMount: function() {
+          var _this = this;
+          window.addEventListener('onRound', function(e) {
+            _this.state.username = e.coPilot.username;
+          });
+        },
+        render: function () {
+          return (
+            <div>
+            Pilot: {this.state.username}
+            </div>
+          );
+        }
+      });
+
+      var DojoGetReady = React.createClass({
+        componentDidMount: function() {
+          var _this = this;
+          window.addEventListener('onRound', function(e) {
+            _this.state.username = e.getReady.username;
+          });
+        },
+        render: function () {
+          return (
+            <div>
+            Pilot: {this.state.username}
+            </div>
+          );
+        }
+      });
+
+      var Dojo = React.createClass({
+        render: function() {
+          return (
+            <section>
+              <DojoPilot/>
+              <DojoCoPilot/>
+              <DojoGetReady/>
+            </section>
+          );
+        }
+      });
+
+      var mountNode = document.getElementById('mountNode');
+      React.render(<Dojo/>, mountNode);
     </script>
   </body>
 </html>

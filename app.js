@@ -25,14 +25,11 @@ function* participant(participants){
 		}
 		let round = {
 			pilot: backlog.shift(),
-			coPilor: backlog[0],
+			coPilot: backlog[0],
 			getReady: backlog[1]
 		};
 		round.pilot.roundCount = roundCount++;
-
-		
-
-			io.emit('round', round);
+		io.emit('round', round);
 		yield round;
 	}
 }

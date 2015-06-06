@@ -1,6 +1,0 @@
-#!/bin/sh
-echo "fortalezarn"
-git config --global user.name "Leandro fortaleza" --replace-all
-git config --global user.email fortaleza555@hotmail.com --replace-all
-git add --all
-git commit -m 'next step'
