@@ -12,9 +12,7 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function(socket){
-    io.emit('round', 'started');
-});
+
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
@@ -34,9 +32,9 @@ function* participant(participants){
 		};
 		round.pilot.roundCount = roundCount++;
 
-		if (io.socket && io.socket.connected) {
-	  	io.broadcast.emit('round', round);
-		}
+		io.on('connection', function(socket){
+			io.broadcast.emit('round', round);
+		});
 
 		yield round;
 	}
