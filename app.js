@@ -63,7 +63,7 @@ function pushCurrentCode(pilot) {
 	exec('git config user.name "' + pilot.username + '" --replace-all');
 	exec('git config user.email ' + pilot.email + ' --replace-all');
 	exec('git add --all');
-	let message = 'Dojo round: ' + pilot.round + ' - My Round: ' + Math.ceil(pilot.round/4);
+	let message = 'Dojo round: ' + pilot.roundCount + ' - My Round: ' + Math.ceil(pilot.roundCount/4);
 	console.log(chalk.grey(message));
 	exec('git commit -m "' + message + '"');
 
