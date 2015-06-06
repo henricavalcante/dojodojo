@@ -82,6 +82,36 @@
         }
       });
 
+      var DojoCountDown = React.createClass({
+        getInitialState: function(){
+          return {
+            startTime: Date.now(),
+            remaining: this.props.time
+          }
+        },
+        tick: function() {
+          this.setState({remaining: Date.now - this.state.startTime });
+        },
+        componentDidMount: function() {
+          var _this = this;
+          window.addEventListener('onRound', function(e) {
+            _this.setState({startTime: Date.now()});
+          });
+          this.tick();
+          this.interval = setInterval(this.tick, 1000);
+        },
+        componentWillUnmount: function() {
+          clearInterval(this.interval);
+        },  
+        render: function(){
+          return (
+            <span>
+              {this.state.remaining}
+            <span>
+          );
+        }
+      });
+
       var Dojo = React.createClass({
         render: function() {
           return (
@@ -89,6 +119,7 @@
               <DojoPilot/>
               <DojoCoPilot/>
               <DojoGetReady/>
+              <DojoCountDown/>
             </section>
           );
         }
