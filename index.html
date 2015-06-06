@@ -49,13 +49,13 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.state.username = e.detail.coPilot.username;
+            _this.setState({username: e.detail.coPilot.username});
           });
         },
         render: function () {
           return (
             <div>
-            Pilot: {this.state.username}
+            CoPilot: {this.state.username}
             </div>
           );
         }
@@ -70,13 +70,13 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.state.username = e.detail.getReady.username;
+            _this.setState({username: e.detail.getReady.username});
           });
         },
         render: function () {
           return (
             <div>
-            Pilot: {this.state.username}
+            Get Ready: {this.state.username}
             </div>
           );
         }
