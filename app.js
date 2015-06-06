@@ -16,8 +16,6 @@ http.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
-
-
 function* participant(participants){
 	var roundCount = 1;
 	var backlog = addParticipantsToBacklog(participants);
@@ -59,10 +57,10 @@ function pushCurrentCode(pilot) {
 
 	exec('git config user.name "' + pilot.username + '" --replace-all');
 	exec('git config user.email ' + pilot.email + ' --replace-all');
-	//exec('git add --all');
+	exec('git add --all');
 	let message = 'Dojo round: ' + pilot.roundCount + ' - My Round: ' + Math.ceil(pilot.roundCount/4);
 	console.log(chalk.grey(message));
-	//exec('git commit -m "' + message + '"');
+	exec('git commit -m "' + message + '"');
 
 	console.log(chalk.green('Code to ' + pilot.username + ' has been commited.'));
 	console.log(pilot);
