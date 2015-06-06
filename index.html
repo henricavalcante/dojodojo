@@ -23,7 +23,7 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.state.username = e.pilot.username;
+            _this.state.username = e.detail.pilot.username;
           });
         },
         render: function () {
@@ -39,7 +39,7 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.state.username = e.coPilot.username;
+            _this.state.username = e.detail.coPilot.username;
           });
         },
         render: function () {
@@ -55,7 +55,7 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.state.username = e.getReady.username;
+            _this.state.username = e.detail.getReady.username;
           });
         },
         render: function () {
