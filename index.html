@@ -2,12 +2,15 @@
 <html>
   <head>
     <title>CodeDojo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
   </head>
   <body>
     <div id="mountNode"></div>
+  
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+
     <script>
       var socket = io();
       socket.on('round', function(participants){
@@ -18,6 +21,32 @@
     </script>
 
     <script type="text/jsx">
+
+      var Card = React.createClass({
+        render: function () {
+          return (
+            <div className="col s12">
+              <div className={'card blue-grey darken-1 ' + this.props.size}>
+                <div className="card-content white-text">
+                  <span className="card-title">{this.props.username}</span>
+                  <p>
+                    {this.props.title}
+                  </p>
+                </div>
+                <div className="card-content">
+                  <p>
+                    SLOC: X
+                    CCOMMITS: Y
+                  </p>
+                </div>
+                <div className="card-action">
+                  <a href="#">GitHub</a>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      });
 
       var DojoPilot = React.createClass({
         getInitialState: function () {
@@ -33,9 +62,7 @@
         },
         render: function () {
           return (
-            <div>
-            Pilot: {this.state.username}
-            </div>
+            <Card title="Pilot" size="large" username={this.state.username}/>
           );
         }
       });
@@ -54,9 +81,7 @@
         },
         render: function () {
           return (
-            <div>
-            CoPilot: {this.state.username}
-            </div>
+            <Card title="Co-Pilot" username={this.state.username}/>
           );
         }
       });
@@ -75,22 +100,22 @@
         },
         render: function () {
           return (
-            <div>
-            Get Ready: {this.state.username}
-            </div>
+            <Card title="Get Ready" username={this.state.username}/>
           );
         }
       });
 
       var DojoCountDown = React.createClass({
-        getInitialState: function(){
+        getInitialState: function() {
           return {
             startTime: Date.now(),
             remaining: this.props.time
-          }
+          };
         },
         tick: function() {
-          this.setState({ remaining: (Date.now() - this.state.startTime) });
+          this.setState({
+            remaining: this.props.time - (~~((Date.now() - this.state.startTime)/1000))
+          });
         },
         componentDidMount: function() {
           var _this = this;
@@ -102,31 +127,46 @@
         },
         componentWillUnmount: function() {
           clearInterval(this.interval);
-        },  
-        render: function(){
+        },
+        render: function() {
           return (
-            <span>
-              {this.state.remaining}
-            <span>
+            <div className="row blue-grey-text darken-3 ">
+              <div className="col s6 right-align ">
+                <i className="large mdi-action-alarm"></i>
+              </div>
+              <div className="col s6 left-align">
+                <h1 className="">{this.state.remaining}</h1>
+              </div>
+            </div>
           );
         }
       });
 
       var Dojo = React.createClass({
+        componentDidMount: function() {
+          socket.emit('update');
+        },
         render: function() {
           return (
             <section>
-              <DojoPilot/>
-              <DojoCoPilot/>
-              <DojoGetReady/>
-              <DojoCountDown time=30/>
+              <div className="row">
+
+                <div className="col s5 offset-s1">
+                  <DojoPilot/>
+                </div>
+                <div className="col s3 offset-s1">
+                  <DojoCoPilot/>
+                  <DojoGetReady/>
+                </div>
+              </div>
+              <DojoCountDown time={this.props.time}/>
             </section>
           );
         }
       });
 
       var mountNode = document.getElementById('mountNode');
-      React.render(<Dojo/>, mountNode);
+      React.render(<Dojo time="30"/>, mountNode);
     </script>
   </body>
 </html>
