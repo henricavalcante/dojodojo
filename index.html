@@ -28,7 +28,7 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.setState({username: e.detail.pilot.username});
+            _this.setState({ username: e.detail.pilot.username });
           });
         },
         render: function () {
@@ -49,7 +49,7 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.setState({username: e.detail.coPilot.username});
+            _this.setState({ username: e.detail.coPilot.username });
           });
         },
         render: function () {
@@ -70,7 +70,7 @@
         componentDidMount: function() {
           var _this = this;
           window.addEventListener('onRound', function(e) {
-            _this.setState({username: e.detail.getReady.username});
+            _this.setState({ username: e.detail.getReady.username });
           });
         },
         render: function () {
@@ -90,7 +90,7 @@
           }
         },
         tick: function() {
-          this.setState({remaining: Date.now - this.state.startTime });
+          this.setState({ remaining: (Date.now() - this.state.startTime) });
         },
         componentDidMount: function() {
           var _this = this;
@@ -119,7 +119,7 @@
               <DojoPilot/>
               <DojoCoPilot/>
               <DojoGetReady/>
-              <DojoCountDown/>
+              <DojoCountDown time=30/>
             </section>
           );
         }
