@@ -4,19 +4,21 @@ var _ = require('lodash');
 var exec = require('child_process').exec;
 var cfg = require('./config.json');
 var chalk = require('chalk');
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
-
-
 
 function* participant(participants){
 	var roundCount = 1;
@@ -59,10 +61,10 @@ function pushCurrentCode(pilot) {
 
 	exec('git config user.name "' + pilot.username + '" --replace-all');
 	exec('git config user.email ' + pilot.email + ' --replace-all');
-	//exec('git add --all');
+	exec('git add --all');
 	let message = 'Dojo round: ' + pilot.roundCount + ' - My Round: ' + Math.ceil(pilot.roundCount/4);
 	console.log(chalk.grey(message));
-	//exec('git commit -m "' + message + '"');
+	exec('git commit -m "' + message + '"');
 
 	console.log(chalk.green('Code to ' + pilot.username + ' has been commited.'));
 	console.log(pilot);
