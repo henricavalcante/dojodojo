@@ -1,0 +1,45 @@
+{
+    "participants": [
+        {
+            "username": "Henri Cavalcante",
+            "email": "hnri_mxel@hotmail.com",
+            "active": true
+        },
+        {
+            "username": "Henri Michel",
+            "email": "hnri_mxel@hotmail.com",
+            "active": true
+        },
+        {
+            "username": "Henri",
+            "email": "hnri_mxel@hotmail.com",
+            "active": true
+        },
+        {
+            "username": "Michel Cavalcante",
+            "email": "hnri_mxel@hotmail.com",
+            "active": true
+        },
+        {
+            "username": "Danilo Thiago",
+            "email": "danilo.t.a.oliveira@hotmail.com",
+            "active": false
+        },
+        {
+            "username": "Leandro Fortaleza",
+            "email": "fortaleza555@hotmail.com",
+            "active": false
+        },
+        {
+            "username": "Micael Souza",
+            "email": "micael.souza@outlook.com",
+            "active": false
+        },
+        {
+            "username": "Emmerson Siqueira",
+            "email": "emmersonsirqueira@gmail.com",
+            "active": false
+        }
+    ],
+    "time": 30000
+}
