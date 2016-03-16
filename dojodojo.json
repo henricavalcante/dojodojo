@@ -6,34 +6,19 @@
             "active": true
         },
         {
-            "username": "Henri Michel",
-            "email": "hnri_mxel@hotmail.com",
-            "active": true
-        },
-        {
-            "username": "Henri",
-            "email": "hnri_mxel@hotmail.com",
-            "active": true
-        },
-        {
-            "username": "Michel Cavalcante",
-            "email": "hnri_mxel@hotmail.com",
-            "active": true
-        },
-        {
             "username": "Danilo Thiago",
             "email": "danilo.t.a.oliveira@hotmail.com",
-            "active": false
+            "active": true
         },
         {
             "username": "Leandro Fortaleza",
             "email": "fortaleza555@hotmail.com",
-            "active": false
+            "active": true
         },
         {
             "username": "Micael Souza",
             "email": "micael.souza@outlook.com",
-            "active": false
+            "active": true
         },
         {
             "username": "Emmerson Siqueira",
