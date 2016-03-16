@@ -1,32 +1,4 @@
 {
-  "_args": [
-    [
-      ".",
-      ""
-    ]
-  ],
-  "_from": "../../Users/henricavalcante/git/henricavalcante/dojo",
-  "_id": "dojodojo@1.0.1",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/dojodojo",
-  "_phantomChildren": {},
-  "_requested": {
-    "name": null,
-    "raw": ".",
-    "rawSpec": ".",
-    "scope": null,
-    "spec": "/Users/henricavalcante/git/henricavalcante/dojo",
-    "type": "directory"
-  },
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_resolved": "file:../../Users/henricavalcante/git/henricavalcante/dojo",
-  "_shasum": "02265584da51735daf0cfe477f5d904a773aec75",
-  "_shrinkwrap": null,
-  "_spec": ".",
-  "_where": "",
   "author": {
     "name": "Henri Cavalcante"
   },
@@ -34,7 +6,7 @@
     "dojodojo": "dojodojo.js"
   },
   "bugs": {
-    "url": "https://github.com/henricavalcante/dojo/issues"
+    "url": "https://github.com/henricavalcante/dojodojo/issues"
   },
   "dependencies": {
     "chalk": "^1.0.0",
@@ -47,7 +19,7 @@
   "description": "Under Construction - To make a dojo in git repository, commiting and randomizing the code just type dojodojo.",
   "devDependencies": {},
   "gitHead": "d9158790b26fd294c92a6dc7ca86304b3e9251ad",
-  "homepage": "https://github.com/henricavalcante/dojo#readme",
+  "homepage": "https://github.com/henricavalcante/dojodojo#readme",
   "license": "MIT",
   "main": "dojodojo.js",
   "name": "dojodojo",
@@ -56,10 +28,10 @@
   "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/henricavalcante/dojo.git"
+    "url": "git+https://github.com/henricavalcante/dojodojo.git"
   },
   "scripts": {
     "test": "grunt test"
   },
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
