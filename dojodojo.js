@@ -7,6 +7,7 @@ const pkg = require('./package.json');
 const dojodojo = require('commander');
 const _ = require('lodash');
 const exec = require('./exec');
+const spawn = exec.spawnSyncStream;
 const chalk = require('chalk');
 const app = require('express')();
 const http = require('http').Server(app);
@@ -68,35 +69,47 @@ function init(participant) {
   });
 
   http.listen(dojodojo.port, function(){
-    console.log('listening on *:%s', dojodojo.port);
+    console.log('Display on http://localhost:%s', dojodojo.port);
   });
 
   var beforePilot = participant.next().value.pilot;
-  const timer = setInterval(function () {
-    commitCurrentCode(beforePilot);
+
+  var timer = setInterval(function () {
+
+    writeLog(beforePilot, (logMessage) => {
+      commitCurrentCode(beforePilot, logMessage);
+    });
     let actualParticipant = participant.next().value;
     console.log(chalk.green('Actual Participants on desk:'));
     console.log(actualParticipant);
     beforePilot = actualParticipant.pilot;
+
   }, dojodojo.time*1000);
 }
 
 
-function commitCurrentCode(pilot) {
-  exec.spawnSyncStream('git', ['config',
-                       'user.name',
-                       pilot.username,
-                       '--replace-all']);
-                       exec.spawnSyncStream('git', ['config',
-                                            'user.email',
-                                            pilot.email,
-                                            '--replace-all']);
-                                            exec.spawnSyncStream('git', ['add', '--all']);
-                                            let message = 'dojo_round_' + pilot.roundCount;
-                                            console.log(chalk.grey(message));
-                                            exec.spawnSyncStream('git', ['commit', '-m', message], {stdio : 'inherit'});
-                                            console.log(chalk.green('Code to ' + pilot.username + ' has been commited.'));
-                                            console.log(pilot);
+function commitCurrentCode(pilot, logMessage) {
+
+  spawn('git', ['config', 'user.name', pilot.username,'--replace-all']);
+  spawn('git', ['config', 'user.email', pilot.email, '--replace-all']);
+  spawn('git', ['add', '--all']);
+
+  spawn('git', ['commit', '-m', logMessage], {stdio : 'inherit'});
+
+  console.log(chalk.green('Code by ' + pilot.username + ' has been commited.'));
+}
+
+
+function writeLog(pilot, cb) {
+
+  let logMessage = '\n\n ' + new Date();
+  logMessage += ' - ' + JSON.stringify(pilot);
+
+  fs.appendFile(path.resolve('.') + '/.dojodojo_log', logMessage, () => {
+    console.log(chalk.grey(logMessage));
+    cb(logMessage);
+  });
+
 }
 
 function addParticipantsToBacklog(participants, backlog) {
