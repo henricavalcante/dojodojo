@@ -1,170 +1,204 @@
-<!doctype html>
-<html>
-  <head>
-    <title>CodeDojo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
-  </head>
-  <body>
-    <div id="mountNode"></div>
-  
-    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <!doctype html>
+  <html>
+    <head>
+      <title>CodeDojo</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+    </head>
+    <body>
+      <div id="mountNode"></div>
+    
+      <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
 
-    <script>
-      var socket = io();
-      socket.on('round', function(participants){
-        var event = new CustomEvent('onRound', {'detail': participants});
-        window.dispatchEvent(event);
-        console.log(participants);
-      });
-    </script>
+      <script>
+        var socket = io();
+        socket.on('round', function(participants){
+          var event = new CustomEvent('onRound', {'detail': participants});
+          window.dispatchEvent(event);
+          console.log(participants);
+        });
+      </script>
 
-    <script type="text/jsx">
+      <script type="text/jsx">
 
-      var Card = React.createClass({
-        render: function () {
-          return (
-            <div className="col s12">
-              <div className={'card blue-grey darken-1 ' + this.props.size}>
-                <div className="card-content white-text">
-                  <span className="card-title">{this.props.username}</span>
-                  <p>
-                    {this.props.title}
-                  </p>
-                </div>
-                <div className="card-content">
-                  <p>
-                  </p>
-                </div>
-                <div className="card-action">
-                  <a href="#">GitHub</a>
-                </div>
-              </div>
-            </div>
-          );
-        }
-      });
-
-      var DojoPilot = React.createClass({
-        getInitialState: function () {
-          return {
-            username: ''
-          };
-        },
-        componentDidMount: function() {
-          var _this = this;
-          window.addEventListener('onRound', function(e) {
-            _this.setState({ username: e.detail.pilot.username });
-          });
-        },
-        render: function () {
-          return (
-            <Card title="Pilot" size="large" username={this.state.username}/>
-          );
-        }
-      });
-
-      var DojoCoPilot = React.createClass({
-        getInitialState: function () {
-          return {
-            username: ''
-          };
-        },
-        componentDidMount: function() {
-          var _this = this;
-          window.addEventListener('onRound', function(e) {
-            _this.setState({ username: e.detail.coPilot.username });
-          });
-        },
-        render: function () {
-          return (
-            <Card title="Co-Pilot" username={this.state.username}/>
-          );
-        }
-      });
-
-      var DojoGetReady = React.createClass({
-        getInitialState: function () {
-          return {
-            username: ''
-          };
-        },
-        componentDidMount: function() {
-          var _this = this;
-          window.addEventListener('onRound', function(e) {
-            _this.setState({ username: e.detail.getReady.username });
-          });
-        },
-        render: function () {
-          return (
-            <Card title="Get Ready" username={this.state.username}/>
-          );
-        }
-      });
-
-      var DojoCountDown = React.createClass({
-        getInitialState: function() {
-          return {
-            startTime: Date.now(),
-            remaining: this.props.time
-          };
-        },
-        tick: function() {
-          this.setState({
-            remaining: this.props.time - (~~((Date.now() - this.state.startTime)/1000))
-          });
-        },
-        componentDidMount: function() {
-          var _this = this;
-          window.addEventListener('onRound', function(e) {
-            _this.setState({startTime: Date.now()});
-          });
-          this.tick();
-          this.interval = setInterval(this.tick, 1000);
-        },
-        componentWillUnmount: function() {
-          clearInterval(this.interval);
-        },
-        render: function() {
-          return (
-            <div className="row blue-grey-text darken-3 ">
-              <div className="col s6 right-align ">
-                <i className="large mdi-action-alarm"></i>
-              </div>
-              <div className="col s6 left-align">
-                <h1 className="">{this.state.remaining}</h1>
-              </div>
-            </div>
-          );
-        }
-      });
-
-      var Dojo = React.createClass({
-        componentDidMount: function() {
-          socket.emit('update');
-        },
-        render: function() {
-          return (
-            <section>
-              <div className="row">
-
-                <div className="col s5 offset-s1">
-                  <DojoPilot/>
-                </div>
-                <div className="col s3 offset-s1">
-                  <DojoCoPilot/>
-                  <DojoGetReady/>
+        var Card = React.createClass({
+          render: function () {
+            return (
+              <div className="col s12">
+                <div className={'card blue-grey darken-1 ' + this.props.size} >
+                  <img src={this.props.image}/>
+                  <div className="card-content white-text">
+                    <span className="card-title">{this.props.username}</span>
+                    <p>
+                      {this.props.title}
+                    </p>
+                  </div>
+                  <div className="card-content">
+                    <p>
+                    </p>
+                  </div>
+                  <div className="card-action">
+                    <a href="#">GitHub</a>
+                  </div>
                 </div>
               </div>
-              <DojoCountDown time={this.props.time}/>
-            </section>
-          );
-        }
-      });
+            );
+          }
+        });
 
-      var mountNode = document.getElementById('mountNode');
-      React.render(<Dojo time="300"/>, mountNode);
-    </script>
-  </body>
-</html>
+        var teste;
+
+        var getData = function(dataUrl){
+          console.log(dataUrl);
+          teste = dataUrl;
+        }
+
+        var callPicture = function(email){
+          
+          fetch("https://api.github.com/search/users?q="+email).then(function(response) {  
+            if (response.status !== 200) {  
+              console.log('Looks like there was a problem. Status Code: ' +  
+                response.status);  
+              return;
+            }
+
+            // Examine the text in the response  
+            response.json().then(function(data) {
+              getData(data.items[0].avatar_url);
+              
+            });  
+          });
+          
+          return teste;
+        }
+        
+        var DojoPilot = React.createClass({
+          getInitialState: function () {
+            return {
+              username: '',
+              backgroundImage: ''
+            };
+          },
+          componentDidMount: function() {
+            var _this = this;
+            window.addEventListener('onRound', function(e) {
+              var str = callPicture(e.detail.pilot.email);
+              console.log(e);
+              _this.setState({ username: e.detail.pilot.username, image: callPicture(e.detail.pilot.email) });
+
+            });
+          },
+          render: function () {
+            var divStyle = {
+              backgroundImage: this.state.image
+            }
+            return (
+              <Card title="Pilot" size="large" username={this.state.username} image={this.state.image}/>
+            );
+          }
+        });
+
+        var DojoCoPilot = React.createClass({
+          getInitialState: function () {
+            return {
+              username: ''
+            };
+          },
+          componentDidMount: function() {
+            var _this = this;
+            window.addEventListener('onRound', function(e) {
+              _this.setState({ username: e.detail.coPilot.username });
+            });
+          },
+          render: function () {
+            return (
+              <Card title="Co-Pilot" username={this.state.username}/>
+            );
+          }
+        });
+
+        var DojoGetReady = React.createClass({
+          getInitialState: function () {
+            return {
+              username: ''
+            };
+          },
+          componentDidMount: function() {
+            var _this = this;
+            window.addEventListener('onRound', function(e) {
+              _this.setState({ username: e.detail.getReady.username });
+            });
+          },
+          render: function () {
+            return (
+              <Card title="Get Ready" username={this.state.username}/>
+            );
+          }
+        });
+
+        var DojoCountDown = React.createClass({
+          getInitialState: function() {
+            return {
+              startTime: Date.now(),
+              remaining: this.props.time
+            };
+          },
+          tick: function() {
+            this.setState({
+              remaining: this.props.time - (~~((Date.now() - this.state.startTime)/1000))
+            });
+          },
+          componentDidMount: function() {
+            var _this = this;
+            window.addEventListener('onRound', function(e) {
+              _this.setState({startTime: Date.now()});
+            });
+            this.tick();
+            this.interval = setInterval(this.tick, 1000);
+          },
+          componentWillUnmount: function() {
+            clearInterval(this.interval);
+          },
+          render: function() {
+            return (
+              <div className="row blue-grey-text darken-3 ">
+                <div className="col s6 right-align ">
+                  <i className="large mdi-action-alarm"></i>
+                </div>
+                <div className="col s6 left-align">
+                  <h1 className="">{this.state.remaining}</h1>
+                </div>
+              </div>
+            );
+          }
+        });
+
+        var Dojo = React.createClass({
+          componentDidMount: function() {
+            socket.emit('update');
+          },
+          render: function() {
+            return (
+              <section>
+                <div className="row">
+
+                  <div className="col s5 offset-s1">
+                    <DojoPilot/>
+                  </div>
+                  <div className="col s3 offset-s1">
+                    <DojoCoPilot/>
+                    <DojoGetReady/>
+                  </div>
+                </div>
+                <DojoCountDown time={this.props.time}/>
+              </section>
+            );
+          }
+        });
+
+        var mountNode = document.getElementById('mountNode');
+        React.render(<Dojo time="5"/>, mountNode);
+      </script>
+    </body>
+  </html>
