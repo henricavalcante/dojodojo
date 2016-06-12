@@ -27,7 +27,7 @@
             return (
               <div className="col s12">
                 <div className={'card blue-grey darken-1 ' + this.props.size} >
-                  <img src={this.props.image}/>
+                  <img src={this.props.image} width="200px" />
                   <div className="card-content white-text">
                     <span className="card-title">{this.props.username}</span>
                     <p>
@@ -50,49 +50,23 @@
         var teste;
 
         var getData = function(dataUrl){
-          console.log(dataUrl);
           teste = dataUrl;
-        }
-
-        var callPicture = function(email){
-          
-          fetch("https://api.github.com/search/users?q="+email).then(function(response) {  
-            if (response.status !== 200) {  
-              console.log('Looks like there was a problem. Status Code: ' +  
-                response.status);  
-              return;
-            }
-
-            // Examine the text in the response  
-            response.json().then(function(data) {
-              getData(data.items[0].avatar_url);
-              
-            });  
-          });
-          
-          return teste;
         }
         
         var DojoPilot = React.createClass({
           getInitialState: function () {
             return {
               username: '',
-              backgroundImage: ''
+              img: ''
             };
           },
           componentDidMount: function() {
             var _this = this;
             window.addEventListener('onRound', function(e) {
-              var str = callPicture(e.detail.pilot.email);
-              console.log(e);
-              _this.setState({ username: e.detail.pilot.username, image: callPicture(e.detail.pilot.email) });
-
+              _this.setState({ username: e.detail.pilot.username, image: e.detail.pilot.img});
             });
           },
           render: function () {
-            var divStyle = {
-              backgroundImage: this.state.image
-            }
             return (
               <Card title="Pilot" size="large" username={this.state.username} image={this.state.image}/>
             );
@@ -102,18 +76,19 @@
         var DojoCoPilot = React.createClass({
           getInitialState: function () {
             return {
-              username: ''
+              username: '',
+              img: ''
             };
           },
           componentDidMount: function() {
             var _this = this;
             window.addEventListener('onRound', function(e) {
-              _this.setState({ username: e.detail.coPilot.username });
+              _this.setState({ username: e.detail.coPilot.username, image: e.detail.coPilot.img });
             });
           },
           render: function () {
             return (
-              <Card title="Co-Pilot" username={this.state.username}/>
+              <Card title="Co-Pilot" username={this.state.username} image={this.state.image}/>
             );
           }
         });
@@ -121,18 +96,19 @@
         var DojoGetReady = React.createClass({
           getInitialState: function () {
             return {
-              username: ''
+              username: '',
+              img: ''
             };
           },
           componentDidMount: function() {
             var _this = this;
             window.addEventListener('onRound', function(e) {
-              _this.setState({ username: e.detail.getReady.username });
+              _this.setState({ username: e.detail.getReady.username, image: e.detail.getReady.img});
             });
           },
           render: function () {
             return (
-              <Card title="Get Ready" username={this.state.username}/>
+              <Card title="Get Ready" username={this.state.username} image={this.state.image}/>
             );
           }
         });
@@ -198,7 +174,7 @@
         });
 
         var mountNode = document.getElementById('mountNode');
-        React.render(<Dojo time="5"/>, mountNode);
+        React.render(<Dojo time="15"/>, mountNode);
       </script>
     </body>
   </html>
