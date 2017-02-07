@@ -13,6 +13,7 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fs = require('fs');
+const request = require('request');
 
 dojodojo
 .version(pkg.version)
@@ -33,9 +34,35 @@ fs.access(cfgFilename, fs.F_OK, (err) => {
   }
   dojodojo.time = dojodojo.time || cfg.time || 300;
   dojodojo.port = dojodojo.port || cfg.port || 3000;
-  dojodojo.participantList = participant(_.where(cfg.participants, {"active": true}));
-  init(dojodojo.participantList);
+  addAvatar(cfg);
+  dojodojo.participantList = participant(_.where(cfg.participants, {"active": true}));      
 });
+
+var i=0;
+function addAvatar(arg){
+    if (i==arg.participants.length - 1){
+      init(dojodojo.participantList);
+      return;
+    } 
+    
+    var options = {
+      url: "https://api.github.com/search/users?q="+arg.participants[i].email,
+      headers: {
+        'User-Agent': 'request'
+      }
+    };
+
+    function callback(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var info = JSON.parse(body);
+        arg.participants[i].img = info.items[0].avatar_url;
+        i++;
+        addAvatar(arg);
+      }
+    }
+    request(options, callback);
+
+}
 
 
 function* participant(participants) {
@@ -63,6 +90,7 @@ function* participant(participants) {
 
 
 function init(participant) {
+
 
   app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
